@@ -1,5 +1,6 @@
 <script setup>
 import { ArrowDown, ArrowUpRight, Code2, Sparkles } from '@lucide/vue'
+import { site } from '../data/site.js'
 
 const profilePhoto = `${import.meta.env.BASE_URL}images/jeffrey-davila-profile.png`
 
@@ -14,13 +15,15 @@ function handlePointerMove(event) {
 <template>
   <section id="home" class="hero-section section-wrap" aria-labelledby="hero-title" @pointermove="handlePointerMove">
     <div class="hero-copy">
-      <p class="eyebrow hero-eyebrow"><span class="eyebrow-dot"></span> AI-ASSISTED WEB DEVELOPER</p>
+      <p class="eyebrow hero-eyebrow"><span class="eyebrow-dot"></span> {{ site.title.toUpperCase() }}</p>
       <h1 id="hero-title">Jeffrey<br /><span>Davila<span class="hero-period">.</span></span></h1>
       <p class="hero-statement">Turning ideas into <span>interactive</span> digital experiences.</p>
+      <p class="hero-specialties">{{ site.specialties.join(' · ') }}</p>
       <p class="hero-description">I build modern, responsive websites and practical web applications by combining web development fundamentals, AI-assisted workflows, creative problem-solving, and hands-on testing.</p>
       <div class="hero-actions">
         <a class="button button-primary" href="#/projects">Explore my projects <ArrowUpRight :size="15" aria-hidden="true" /></a>
         <a class="button button-quiet" href="#/contact">Contact me <ArrowDown :size="14" aria-hidden="true" /></a>
+        <a class="button button-quiet" href="#/resume">View résumé <ArrowUpRight :size="14" aria-hidden="true" /></a>
       </div>
       <p class="hero-note"><Sparkles :size="13" aria-hidden="true" /> Thoughtful code. Useful experiences.</p>
     </div>

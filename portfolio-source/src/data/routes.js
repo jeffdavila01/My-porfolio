@@ -1,5 +1,5 @@
 export const pageTitles = {
-  home: 'Home', about: 'About', skills: 'Skills', workflow: 'Workflow', projects: 'Projects', contact: 'Contact',
+  home: 'Home', about: 'About', skills: 'Skills', workflow: 'Workflow', projects: 'Projects', resume: 'Resume', contact: 'Contact',
 }
 
 // Hash routes work on static hosts without server-side URL rewrites.

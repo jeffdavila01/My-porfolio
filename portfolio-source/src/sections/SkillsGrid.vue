@@ -1,28 +1,20 @@
 <script setup>
-const skills = [
-  { name: 'HTML5', group: 'CORE TECHNOLOGY', symbol: '5', className: 'skill-html', description: 'Semantic structure and page development.' },
-  { name: 'CSS3', group: 'CORE TECHNOLOGY', symbol: '✳', className: 'skill-css', description: 'Responsive layouts, animation, Grid, and Flexbox.' },
-  { name: 'JavaScript', group: 'CORE TECHNOLOGY', symbol: 'JS', className: 'skill-js', description: 'Website interactivity and application logic.' },
-  { name: 'SQL', group: 'CORE TECHNOLOGY', symbol: '⌘', className: 'skill-sql', description: 'Queries, data organization, and relational fundamentals.' },
-  { name: 'Vue.js', group: 'CORE TECHNOLOGY', symbol: 'V', className: 'skill-vue', description: 'Component-based interfaces and reactive applications.' },
-  { name: 'AI-assisted development', group: 'CAPABILITY', symbol: '✳', className: 'skill-ai', description: 'Structured prompts, code review, testing, and iteration.' },
-  { name: 'Responsive UI', group: 'CAPABILITY', symbol: '▤', className: 'skill-ui', description: 'Turning interface designs into working layouts.' },
-  { name: 'Git & GitHub', group: 'CAPABILITY', symbol: '⑂', className: 'skill-git', description: 'Version control and collaborative workflows.' },
-]
+import { computed, ref } from 'vue'
+import { Code2, Database, GitBranch, LayoutDashboard, PanelsTopLeft, Sparkles } from '@lucide/vue'
+import SkillCategoryCard from '../components/SkillCategoryCard.vue'
+import { skillCategories } from '../data/skills.js'
+
+const selected = ref('all')
+const icons = { code: Code2, database: Database, tools: GitBranch, systems: LayoutDashboard, web: PanelsTopLeft, automation: Sparkles }
+const visibleCategories = computed(() => selected.value === 'all' ? skillCategories : skillCategories.filter(category => category.id === selected.value))
 </script>
 
 <template>
   <section id="skills" class="skills-section section-wrap section-space" aria-labelledby="skills-title">
-    <div class="section-heading section-heading-row reveal">
-      <div><p class="eyebrow"><span class="section-index">02</span> THE TOOLKIT</p><h2 id="skills-title">Technologies<br /><span>& tools.</span></h2></div>
-      <p class="section-side-note">A growing toolkit for shaping useful, thoughtful digital experiences.</p>
-    </div>
-    <div class="skills-grid">
-      <article v-for="(skill, index) in skills" :key="skill.name" class="skill-card reveal" :class="[skill.className, `skill-position-${index + 1}`]">
-        <div class="skill-card-top"><span class="skill-symbol" aria-hidden="true">{{ skill.symbol }}</span><span class="skill-group">{{ skill.group }}</span></div>
-        <div><h3>{{ skill.name }}</h3><p>{{ skill.description }}</p></div>
-        <span class="skill-card-corner" aria-hidden="true">↗</span>
-      </article>
-    </div>
+    <div class="section-heading section-heading-row reveal"><div><p class="eyebrow"><span class="section-index">02</span> THE TOOLKIT</p><h2 id="skills-title">Technical<br /><span>skills.</span></h2></div><p class="section-side-note">My technical skills span web development, database management, automation, and AI-assisted software development.</p></div>
+    <div class="technical-intro"><p>From responsive interfaces to backend and automation concepts, this is the toolkit I'm building with and continuing to explore.</p><p class="technical-context-note">Project use, technical areas, and development interests are labeled individually.</p></div>
+    <div class="technical-filters" role="group" aria-label="Filter technical skills by category"><button type="button" :aria-pressed="selected === 'all'" aria-controls="technical-categories" @click="selected = 'all'">All skills</button><button v-for="category in skillCategories" :key="category.id" type="button" :aria-pressed="selected === category.id" aria-controls="technical-categories" @click="selected = category.id">{{ category.shortLabel }}</button></div>
+    <p class="visually-hidden" role="status">{{ selected === 'all' ? 'Showing all skill categories' : `Showing ${visibleCategories[0].title}` }}</p>
+    <div id="technical-categories" class="technical-categories" :class="{ 'technical-single-category': selected !== 'all' }"><SkillCategoryCard v-for="category in visibleCategories" :key="category.id" :category="category" :icon="icons[category.icon]" /></div>
   </section>
 </template>

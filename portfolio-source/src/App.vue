@@ -8,8 +8,10 @@ import WorkflowTimeline from './sections/WorkflowTimeline.vue'
 import ProjectShowcase from './sections/ProjectShowcase.vue'
 import AIAssistedSection from './sections/AIAssistedSection.vue'
 import ContactSection from './sections/ContactSection.vue'
+import ResumeSection from './sections/ResumeSection.vue'
 import FooterBar from './components/FooterBar.vue'
 import { pageTitles, resolveRoute } from './data/routes.js'
+import { site } from './data/site.js'
 
 const theme = ref('dark')
 const currentHash = ref(window.location.hash)
@@ -17,7 +19,7 @@ const route = computed(() => resolveRoute(currentHash.value))
 const activePage = computed(() => route.value.page)
 const main = ref(null)
 const navigationOpen = ref(false)
-const pages = { home: HeroSection, about: AboutSection, skills: SkillsGrid, workflow: WorkflowTimeline, projects: ProjectShowcase, contact: ContactSection }
+const pages = { home: HeroSection, about: AboutSection, skills: SkillsGrid, workflow: WorkflowTimeline, projects: ProjectShowcase, resume: ResumeSection, contact: ContactSection }
 let revealObserver
 
 function applyTheme(nextTheme) {
@@ -38,7 +40,7 @@ function observeReveals() {
   else elements.forEach(element => revealObserver.observe(element))
 }
 function updateTitle() {
-  document.title = `${pageTitles[activePage.value]} | Jeffrey Davila — Web Developer`
+  document.title = `${pageTitles[activePage.value]} | ${site.name} — ${site.title}`
 }
 watch(activePage, async () => {
   updateTitle()
