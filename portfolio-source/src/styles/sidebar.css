@@ -4,6 +4,7 @@ html { scroll-padding-top: 32px; }
 .sidebar-brand-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .sidebar-brand { display: flex; align-items: center; gap: 10px; }
 .sidebar-brand .wordmark-icon { flex: 0 0 37px; }
+.sidebar-profile-photo { display: block; width: 38px; height: 38px; flex: 0 0 38px; border: 1px solid var(--line-strong); border-radius: 12px; object-fit: cover; object-position: 50% 25%; box-shadow: 0 3px 12px rgb(124 58 237 / 12%); }
 .sidebar-brand strong { display: block; color: var(--text); font: 700 12px 'Manrope', sans-serif; }
 .sidebar-brand small { display: block; margin-top: 5px; color: var(--subtle); font: 7px 'DM Mono', monospace; letter-spacing: 1.2px; }
 .sidebar-caption { margin: 46px 12px 14px; color: var(--subtle); font: 8px 'DM Mono', monospace; letter-spacing: 1.8px; }

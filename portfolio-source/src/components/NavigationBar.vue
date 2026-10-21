@@ -9,6 +9,8 @@ const menuOpen = ref(false)
 const isCompact = ref(window.matchMedia('(max-width: 980px)').matches)
 const drawer = ref(null)
 const menuButton = ref(null)
+const profilePhoto = `${import.meta.env.BASE_URL}images/jeffrey-davila-profile.png`
+const profilePhotoFailed = ref(false)
 const icons = { Home, About: UserRound, Skills: Code2, Workflow: Route, Projects: BriefcaseBusiness, Resume: FileText, Contact: Mail }
 let mediaQuery
 let previousOverflow = ''
@@ -57,12 +59,12 @@ onUnmounted(() => {
 
 <template>
   <header class="sidebar-mobile-bar" :inert="menuOpen && isCompact">
-    <a class="wordmark" href="#/home" @click="closeMenu(true)"><span class="wordmark-icon">JD<span>.</span></span><span class="wordmark-name">{{ site.name }}</span></a>
+    <a class="wordmark" href="#/home" @click="closeMenu(true)"><img v-if="!profilePhotoFailed" class="sidebar-profile-photo" :src="profilePhoto" alt="" width="38" height="38" @error="profilePhotoFailed = true" /><span v-else class="wordmark-icon">JD<span>.</span></span><span class="wordmark-name">{{ site.name }}</span></a>
     <button ref="menuButton" class="sidebar-menu-button" type="button" :aria-expanded="menuOpen" aria-controls="portfolio-sidebar" aria-label="Open navigation menu" @click="menuOpen = true"><Menu :size="20" aria-hidden="true" /></button>
   </header>
   <button v-if="isCompact && menuOpen" class="sidebar-backdrop" type="button" tabindex="-1" aria-label="Close navigation menu" @click="closeMenu(true)"></button>
   <aside id="portfolio-sidebar" ref="drawer" class="portfolio-sidebar" :class="{ 'sidebar-is-open': menuOpen }" :inert="isCompact && !menuOpen" :role="isCompact && menuOpen ? 'dialog' : undefined" :aria-modal="isCompact && menuOpen ? 'true' : undefined" aria-label="Portfolio navigation">
-    <div class="sidebar-brand-row"><a class="sidebar-brand" href="#/home" @click="closeMenu(true)"><span class="wordmark-icon">JD<span>.</span></span><span><strong>{{ site.name }}</strong><small>{{ site.title.toUpperCase() }}</small></span></a><button class="sidebar-close-button" type="button" aria-label="Close navigation menu" @click="closeMenu(true)"><X :size="19" aria-hidden="true" /></button></div>
+    <div class="sidebar-brand-row"><a class="sidebar-brand" href="#/home" @click="closeMenu(true)"><img v-if="!profilePhotoFailed" class="sidebar-profile-photo" :src="profilePhoto" alt="" width="38" height="38" @error="profilePhotoFailed = true" /><span v-else class="wordmark-icon">JD<span>.</span></span><span><strong>{{ site.name }}</strong><small>{{ site.title.toUpperCase() }}</small></span></a><button class="sidebar-close-button" type="button" aria-label="Close navigation menu" @click="closeMenu(true)"><X :size="19" aria-hidden="true" /></button></div>
     <p class="sidebar-caption">EXPLORE</p>
     <nav class="sidebar-links" aria-label="Main navigation"><a v-for="item in navigation" :key="item.href" :href="item.href" :aria-current="activeSection === item.href.slice(2) ? 'page' : undefined" @click="closeMenu(true)"><component :is="icons[item.label]" :size="18" aria-hidden="true" /><span>{{ item.label }}</span><span class="sidebar-active-dot" aria-hidden="true"></span></a></nav>
     <div class="sidebar-bottom"><p>Thoughtful code.<br /><span>Useful experiences.</span></p><a v-if="site.email" class="sidebar-email" :href="gmailComposeUrl()" target="_blank" rel="noopener noreferrer">Gmail <ArrowUpRight :size="15" aria-hidden="true" /></a><button class="sidebar-theme" type="button" :aria-pressed="theme === 'light'" :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`" @click="emit('toggle-theme')"><Sun v-if="theme === 'dark'" :size="17" aria-hidden="true" /><Moon v-else :size="17" aria-hidden="true" /><span>{{ theme === 'dark' ? 'Light mode' : 'Dark mode' }}</span></button><small>© {{ new Date().getFullYear() }} Jeffrey Davila</small></div>
